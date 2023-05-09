@@ -1,9 +1,11 @@
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'dart:ui';
 import 'screens/homePage.dart';
 import 'global.dart';
+import 'dart:ui';
 
 void main() async {
   WidgetsBinding widgetsBinding =WidgetsFlutterBinding.ensureInitialized();
