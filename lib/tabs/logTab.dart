@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:t2/global.dart';
 
-Widget customDrawer() {
+Widget logTab() {
   return Drawer(
-    backgroundColor: Color.fromARGB(255, 18, 18, 18),
+    backgroundColor: const Color.fromARGB(255, 18, 18, 18),
     width: width,
     child: Column(
       children: [

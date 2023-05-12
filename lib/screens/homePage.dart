@@ -1,7 +1,7 @@
-
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:t2/functions/textToSpeech.dart';
-import 'package:t2/widgets/customDrawer.dart';
+import 'package:t2/tabs/educateTab.dart';
+import 'package:t2/tabs/logTab.dart';
 import 'package:t2/functions/classifier.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -42,7 +42,6 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     super.dispose();
   }
 
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (_camController == null || !_camController.value.isInitialized) return;
@@ -75,7 +74,6 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     }
   }
 
-
   void imageStream() {
     timer = Timer.periodic(const Duration(seconds: 2), (_) async {
       String frameData = "";
@@ -93,70 +91,83 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     });
   }
 
+  void onDrawerChange(bool isOpened) {
+    setState(() {
+      if (isOpened) {
+        //save the state of mute and start capture button and turn of evrything
+        wasMute = isMute;
+        wasRunning = isRunning;
+        isMute = true;
+        isRunning = false;
+      } else {
+        //after closing the drawer resume the state of controllersprint
+        isMute = wasMute!;
+        isRunning = wasRunning!;
+      }
+      if (!isRunning) {
+        //dispose all the controllers when the drawer is opened
+        _camController.dispose();
+        _tts.stop();
+        if (timer != null) timer!.cancel();
+        isReady = false;
+      } else {
+        initializeCamera();
+      }
+    });
+  }
+
 //
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
+      //
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
       resizeToAvoidBottomInset: false,
-      onDrawerChanged: (isOpened) {
-        setState(() {
-          if (isOpened) {//save the state of mute and start capture button and turn of evrything
-            isDrawer = true;
-            wasMute = isMute;
-            wasRunning = isRunning;
-            isMute = true;
-            isRunning = false;
-          } else {//after closing the drawer resume the state of controllers
-            isDrawer = false;
-            isMute = wasMute!;
-            isRunning = wasRunning!;
-          }
-          if (!isRunning ) {//dispose all the controllers when the drawer is opened
-            _camController.dispose();
-            _tts.stop();
-            if(timer != null) timer!.cancel();
-            isReady = false; 
-          } else {
-            initializeCamera();
-          }
-        });
-      },
-      key: key,
       backgroundColor: Colors.black,
-      drawer: customDrawer(),
+      drawer: educateTab(),
+      endDrawer: logTab(),
+      key: key,
+      //
+      onEndDrawerChanged: (isOpened) {
+        onDrawerChange(isOpened);
+      },
+      onDrawerChanged: (isOpened) {
+        onDrawerChange(isOpened);
+      },
+      //
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(
+            () {
+              isMute = !isMute;
+              isMute ? _tts.setVolume(0) : _tts.setVolume(1);
+            },
+          );
+        },
+        splashColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        child: Icon(
+            isMute ? Icons.volume_off_outlined : Icons.volume_up_outlined,
+            color: isMute ? Colors.white24 : Colors.white70,
+            size: 24),
+      ),
+      //
       bottomNavigationBar: Container(
         height: 50,
         color: Colors.black,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    key.currentState!.openDrawer();
-                  },
-                  icon: Icon(Icons.book_outlined,
-                      color: isDrawer
-                          ? const Color.fromARGB(255, 24, 151, 255)
-                          : Colors.white24,
-                      size: 24),
-                  color: Colors.white24,
-                ),
-                Positioned(
-                  top: 35,
-                  child: Icon(
-                    Icons.arrow_drop_up_sharp,
-                    color: isDrawer
-                        ? const Color.fromARGB(255, 24, 151, 255)
-                        : Colors.transparent,
-                    size: 17,
-                  ),
-                ),
-              ],
+            IconButton(
+              onPressed: () {
+                key.currentState!.openDrawer();
+              },
+              icon: const Icon(Icons.school_outlined,
+                  color:  Colors.white24,
+                  size: 24),
+              color: Colors.white24,
             ),
             Stack(
               alignment: Alignment.center,
@@ -192,40 +203,19 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 ),
               ],
             ),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    setState(
-                      () {
-                        isMute = !isMute;
-                        isMute ? _tts.setVolume(0) : _tts.setVolume(1);
-                      },
-                    );
-                  },
-                  icon: Icon(Icons.volume_up_outlined,
-                      color: isMute
-                          ? Colors.white24
-                          : const Color.fromARGB(255, 24, 151, 255),
-                      size: 24),
-                  color: Colors.white24,
-                ),
-                Positioned(
-                  top: 35,
-                  child: Icon(
-                    Icons.arrow_drop_up_sharp,
-                    color: isMute
-                        ? Colors.transparent
-                        : const Color.fromARGB(255, 24, 151, 255),
-                    size: 17,
-                  ),
-                ),
-              ],
-            ),
+            IconButton(
+              onPressed: () {
+                key.currentState!.openEndDrawer();
+              },
+              icon: const Icon(Icons.book_outlined,
+                  color:  Colors.white24,
+                  size: 24),
+              color: Colors.white24,
+            )
           ],
         ),
       ),
+      //
       body: Column(
         children: [
           Container(
@@ -293,7 +283,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       ],
                       colors: [
                         Colors.transparent,
-                        Colors.white30,   
+                        Colors.white30,
                       ],
                     ),
                     borderRadius: BorderRadius.only(

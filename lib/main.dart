@@ -1,14 +1,11 @@
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'dart:ui';
 import 'screens/homePage.dart';
 import 'global.dart';
 import 'dart:ui';
-
 void main() async {
-  WidgetsBinding widgetsBinding =WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   DartPluginRegistrant.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   cameras = await availableCameras();
@@ -24,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: appTitle,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
       home: MyHomePage(title: appTitle),
       debugShowCheckedModeBanner: false,
