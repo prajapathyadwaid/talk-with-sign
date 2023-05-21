@@ -32,7 +32,7 @@ Widget videoFrame(int i) {
               ),
             ),
             child: CachedNetworkImage(
-              imageUrl: "https://img.youube.com/vi/${links[i]}/0.jpg",fit: BoxFit.fill,
+              imageUrl: "https://img.youtube.com/vi/${links[i]}/default.jpg",fit: BoxFit.fill,
               placeholder: (context, url) => const CircularProgressIndicator(),errorWidget: (context, url, error) {
                 return const Icon(Icons.error);
               },
