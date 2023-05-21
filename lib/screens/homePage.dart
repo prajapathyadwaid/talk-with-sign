@@ -137,7 +137,7 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         onDrawerChange(isOpened);
       },
       //
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(elevation: 0,
         onPressed: () {
           setState(
             () {
@@ -146,11 +146,12 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             },
           );
         },
+        
         splashColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black12,
         child: Icon(
             isMute ? Icons.volume_off_outlined : Icons.volume_up_outlined,
-            color: isMute ? Colors.white24 : Colors.white70,
+            color: isMute ? Colors.white54 : Colors.white,
             size: 24),
       ),
       //

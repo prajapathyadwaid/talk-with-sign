@@ -13,10 +13,11 @@ Widget imageFrame(int i) {
     child: Column(
       children: [
         Container(
-          width: width * 0.5,
+          width: width * 0.5,clipBehavior: Clip.hardEdge,
           height: width * 0.5,
-          decoration: BoxDecoration(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),
             image: DecorationImage(
+              
               image: AssetImage("assets/images/${pTitles[i]}.jpeg"),
             ),
           ),
