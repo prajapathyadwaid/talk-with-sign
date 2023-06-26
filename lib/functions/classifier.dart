@@ -5,12 +5,13 @@ import 'package:t2/global.dart';
 class Classifier {
   void loadModel() async {
     await Tflite.loadModel(
-        model: pathToModel, labels: pathToLabel, numThreads: 2);
+        model: pathToModel, labels: pathToLabel,numThreads: 2 );
   }
 
   Future<dynamic> runModel(XFile img) async {
-    var recognitions = await Tflite.detectObjectOnImage(path: img.path);
-    return recognitions![0]["detectedClass"].toString();
+    var recognitions = await Tflite.runModelOnImage(path:  img.path,);
+    print(recognitions);
+    return recognitions![0]["label"].toString();
   }
 
   void dispose() async {

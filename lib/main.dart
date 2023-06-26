@@ -5,6 +5,7 @@ import 'screens/homePage.dart';
 import 'global.dart';
 import 'dart:ui';
 void main() async {
+  
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   DartPluginRegistrant.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

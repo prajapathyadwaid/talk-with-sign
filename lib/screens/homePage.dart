@@ -17,12 +17,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+
   late CameraController _camController;
   final Speak _tts = Speak();
   final Classifier _classifier = Classifier();
 
   @override
-  void initState() {
+  void initState() {//app 
     WidgetsBinding.instance.addObserver(this);
     txtController1 = TextEditingController();
     txtController2 = TextEditingController();
@@ -229,10 +230,10 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   )
                 : isReady && isRunning
                     ? CameraPreview(_camController)
-                    : Center(
+                    :const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children:  [
                             Icon(
                               Icons.camera_alt_outlined,
                               color: Colors.white38,
