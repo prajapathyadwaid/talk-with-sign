@@ -1,16 +1,11 @@
-# t2
+# Talk-with-Sign
 
-A new Flutter project.
+Talk-with-Sign is an application that utilizes camera input to recognize Indian Sign Language (ISL) gestures and translate them into English. This tool is designed to facilitate communication and bridge language barriers for individuals using ISL.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Gesture Recognition**: Uses camera input to detect and interpret Indian Sign Language gestures.
+- **Translation to English**: Converts recognized gestures into English text for clear communication.
+- **Real-time Processing**: Provides instant feedback and translations based on live camera input.
+- **User-Friendly Interface**: Easy-to-use interface for seamless interaction.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
